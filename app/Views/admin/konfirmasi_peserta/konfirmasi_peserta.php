@@ -9,17 +9,18 @@
       <li class="breadcrumb-item active">Konfirmasi Peserta</li>
     </ol>
   </nav>
-</div><!-- End Page Title -->
+</div>
 
 <section class="section">
   <div class="row">
     <div class="col-12">
 
-      <div class="card border-0 shadow rounded-4">
-        <div class="card-header text-white" style="background-color:#f97316;">
-          <h4 class="mb-0"><i class="bi bi-people"></i> Data Konfirmasi Peserta (Lengkap)</h4>
-        </div>
+      <div class="card " style="border-top: 5px solid #f97316;">
         <div class="card-body">
+          <h5 class="card-title" style="color: #003366;">
+            <i class="bi bi-people-fill me-2" style="color: #f97316;"></i>
+            Data Konfirmasi Peserta
+          </h5>
 
           <?php if(session()->getFlashdata('success')): ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -122,6 +123,12 @@
               </tbody>
             </table>
           </div>
+
+          <div class="d-flex justify-content-center mt-5">
+            <?= $pager->links('peserta', 'peserta_pagination') ?>
+          </div>
+
+
 
         </div>
       </div>

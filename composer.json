@@ -15,6 +15,7 @@
         "dompdf/dompdf": "^3.1",
         "endroid/qr-code": "^4.7",
         "phpmailer/phpmailer": "^6.10",
+        "phpoffice/phpspreadsheet": "^4.4",
         "tecnickcom/tcpdf": "^6.10"
     },
     "require-dev": {

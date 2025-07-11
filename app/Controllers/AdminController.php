@@ -24,12 +24,24 @@ class AdminController extends BaseController
         return view('admin/dashboard');
     }
 
-    public function konfirmasiPeserta()
-    {
-        $model = new PesertaModel();
-        $data['peserta'] = $model->where('status_pendaftaran', 'Menunggu')->findAll();
-        return view('admin/konfirmasi_peserta/konfirmasi_peserta', $data);
-    }
+public function konfirmasiPeserta()
+{
+    $model = new PesertaModel();
+
+    // Ambil parameter page dari query string (?page=2)
+    $currentPage = $this->request->getVar('page_peserta') ?? 1;
+
+    // Data pagination (5 data per halaman, misalnya)
+    $data['peserta'] = $model
+        ->where('status_pendaftaran', 'Menunggu')
+        ->paginate(1, 'peserta');
+
+    $data['pager'] = $model->pager;
+    $data['currentPage'] = $currentPage;
+
+    return view('admin/konfirmasi_peserta/konfirmasi_peserta', $data);
+}
+
 
 public function konfirmasi($id)
 {
@@ -95,145 +107,145 @@ public function konfirmasi($id)
     $qrBase64 = base64_encode(file_get_contents($qrPath));
     $logoBase64 = base64_encode(file_get_contents($logoPath));
 
-$html = '
-<style>
-  body {
-    font-family: "Helvetica", sans-serif;
-    font-size: 13px;
-    margin: 0;
-    padding: 0;
-    background-color: #ffffff;
-    color: #222;
-  }
+    $html = '
+    <style>
+      body {
+        font-family: "Helvetica", sans-serif;
+        font-size: 13px;
+        margin: 0;
+        padding: 0;
+        background-color: #ffffff;
+        color: #222;
+      }
 
-  .ticket {
-    max-width: 720px;
-    margin: auto;
-    padding: 30px 40px;
-    border: 1px solid #ccc;
-  }
+      .ticket {
+        max-width: 720px;
+        margin: auto;
+        padding: 30px 40px;
+        border: 1px solid #ccc;
+      }
 
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
 
-  .header img {
-    height: 55px;
-  }
+      .header img {
+        height: 55px;
+      }
 
-  .event-info {
-    text-align: right;
-  }
+      .event-info {
+        text-align: right;
+      }
 
-  .event-info h2 {
-    margin: 0;
-    font-size: 20px;
-    color: #007BFF;
-  }
+      .event-info h2 {
+        margin: 0;
+        font-size: 20px;
+        color: #007BFF;
+      }
 
-  .event-info small {
-    font-size: 12px;
-    color: #777;
-  }
+      .event-info small {
+        font-size: 12px;
+        color: #777;
+      }
 
-  hr {
-    border: none;
-    border-top: 1px solid #ddd;
-    margin: 20px 0;
-  }
+      hr {
+        border: none;
+        border-top: 1px solid #ddd;
+        margin: 20px 0;
+      }
 
-  .section-title {
-    font-weight: bold;
-    font-size: 14px;
-    margin-bottom: 10px;
-    color: #333;
-  }
+      .section-title {
+        font-weight: bold;
+        font-size: 14px;
+        margin-bottom: 10px;
+        color: #333;
+      }
 
-  .details, .info {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
+      .details, .info {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
 
-  .details .col, .info .col {
-    width: 48%;
-  }
+      .details .col, .info .col {
+        width: 48%;
+      }
 
-  .item {
-    margin-bottom: 8px;
-  }
+      .item {
+        margin-bottom: 8px;
+      }
 
-  .item span {
-    font-weight: bold;
-    color: #555;
-  }
+      .item span {
+        font-weight: bold;
+        color: #555;
+      }
 
-  .qr {
-    text-align: center;
-    margin-top: 30px;
-  }
+      .qr {
+        text-align: center;
+        margin-top: 30px;
+      }
 
-  .qr img {
-    width: 150px;
-    height: 150px;
-  }
+      .qr img {
+        width: 150px;
+        height: 150px;
+      }
 
-  .qr-code-text {
-    margin-top: 10px;
-    font-size: 14px;
-    font-weight: bold;
-  }
+      .qr-code-text {
+        margin-top: 10px;
+        font-size: 14px;
+        font-weight: bold;
+      }
 
-  .footer {
-    margin-top: 40px;
-    font-size: 11px;
-    color: #888;
-    text-align: center;
-  }
-</style>
+      .footer {
+        margin-top: 40px;
+        font-size: 11px;
+        color: #888;
+        text-align: center;
+      }
+    </style>
 
-<div class="ticket">
-  <div class="header">
-    <img src="data:image/png;base64,' . $logoBase64 . '" alt="Event Logo">
-    <div class="event-info">
-      <h2>KUDUNGGA RUN FESTIVAL 2025</h2>
-      <small>Lapangan Kudungga, Sangatta</small>
+    <div class="ticket">
+      <div class="header">
+        <img src="data:image/png;base64,' . $logoBase64 . '" alt="Event Logo">
+        <div class="event-info">
+          <h2>KUDUNGGA RUN FESTIVAL 2025</h2>
+          <small>Lapangan Kudungga, Sangatta</small>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="section-title">Informasi Peserta</div>
+      <div class="details">
+        <div class="col">
+          <div class="item"><span>Nama:</span> ' . $peserta['nama_peserta'] . '</div>
+          <div class="item"><span>Email:</span> ' . $peserta['email'] . '</div>
+          <div class="item"><span>Nomor Tiket:</span> ' . $kodeUnik . '</div>
+        </div>
+        <div class="col">
+          <div class="item"><span>Kategori:</span> ' . ucfirst($peserta['kategori_lari']) . '</div>
+          <div class="item"><span>Tanggal:</span> 21 Juli 2025</div>
+          <div class="item"><span>Waktu:</span> 06.00 WITA - 11.00 WITA</div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="qr">
+        <p>Scan QR ini saat pengambilan race pack</p>
+        <img src="data:image/png;base64,' . $qrBase64 . '" alt="QR Code">
+        <div class="qr-code-text">QR-' . $kodeUnik . '</div>
+      </div>
+
+      <div class="footer">
+        Harap menunjukkan tiket ini saat pengambilan nomor lari & race pack. <br>
+        © 2025 Kudungga Run Festival - All rights reserved.
+      </div>
     </div>
-  </div>
-
-  <hr>
-
-  <div class="section-title">Informasi Peserta</div>
-  <div class="details">
-    <div class="col">
-      <div class="item"><span>Nama:</span> ' . $peserta['nama_peserta'] . '</div>
-      <div class="item"><span>Email:</span> ' . $peserta['email'] . '</div>
-      <div class="item"><span>Nomor Tiket:</span> ' . $kodeUnik . '</div>
-    </div>
-    <div class="col">
-      <div class="item"><span>Kategori:</span> ' . ucfirst($peserta['kategori_lari']) . '</div>
-      <div class="item"><span>Tanggal:</span> 21 Juli 2025</div>
-      <div class="item"><span>Waktu:</span> 06.00 WITA - 11.00 WITA</div>
-    </div>
-  </div>
-
-  <hr>
-
-  <div class="qr">
-    <p>Scan QR ini saat pengambilan race pack</p>
-    <img src="data:image/png;base64,' . $qrBase64 . '" alt="QR Code">
-    <div class="qr-code-text">QR-' . $kodeUnik . '</div>
-  </div>
-
-  <div class="footer">
-    Harap menunjukkan tiket ini saat pengambilan nomor lari & race pack. <br>
-    © 2025 Kudungga Run Festival - All rights reserved.
-  </div>
-</div>
-';
+    ';
 
 
 

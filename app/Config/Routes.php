@@ -28,3 +28,16 @@ $routes->get('/admin/konfirmasi-peserta', 'AdminController::konfirmasiPeserta');
 $routes->get('/admin/konfirmasi-peserta/konfirmasi/(:num)', 'AdminController::konfirmasi/$1');
 $routes->get('/admin/konfirmasi-peserta/tolak/(:num)', 'AdminController::tolak/$1');
 
+
+
+    $routes->get('admin/pengambilan/scan', 'PengambilanBajuController::scan');
+    $routes->post('admin/pengambilan/scan', 'PengambilanBajuController::prosesScan');
+    $routes->get('admin/pengambilan/manual', 'PengambilanBajuController::manual');
+    $routes->post('admin/pengambilan/update/(:num)', 'PengambilanBajuController::updateManual/$1');
+
+
+// Laporan
+    $routes->get('LaporanController/terkonfirmasi', 'LaporanController::terkonfirmasi');
+    $routes->get('LaporanController/sudahAmbilBaju', 'LaporanController::sudahAmbilBaju');
+    $routes->get('LaporanController/exportPesertaTerkonfirmasiExcel', 'LaporanController::exportPesertaTerkonfirmasiExcel');
+    $routes->get('LaporanController/exportSudahAmbilBajuExcel', 'LaporanController::exportSudahAmbilBajuExcel');

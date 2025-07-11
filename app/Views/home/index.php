@@ -8,8 +8,12 @@
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <!-- Swiper CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+  <!-- aos -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
 
   <style>
     body 
@@ -24,13 +28,14 @@
     }
     .text-orange 
     { 
-      color: #f97316; 
+      color: #e45014; 
     }
 
 
   .hero {
     position: relative;
-    background: url('<?= base_url("assets/gambar/bg-banner.png") ?>') top center / cover no-repeat;
+    background: url('<?= base_url("assets/gambar/banner-zoom1.jpeg") ?>') top center / cover no-repeat;
+    /* background: url('<?= base_url("assets/gambar/bg-banner.png") ?>') top center / cover no-repeat; */
     min-height: 80vh;
     display: flex;
     align-items: center;
@@ -85,11 +90,6 @@
     overflow: hidden;
     box-shadow: 0 10px 20px rgba(0,0,0,0.2);
   }
-
-
-
-
-
     .btn-orange 
     {
       background-color: #f97316;
@@ -105,7 +105,7 @@
 <body>
 
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg bg-white shadow fixed-top">
+  <nav class="navbar navbar-expand-lg bg-white shadow fixed-top" data-aos="fade-down">
     <div class="container">
       <a class="navbar-brand fw-bold text-orange" href="#">
           <img src="<?= base_url('assets/gambar/event logo 1.png') ?>" alt="Sponsor 1" class="img-fluid" style="max-height:50px;">
@@ -115,7 +115,8 @@
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav gap-3">
-          <li class="nav-item"><a class="nav-link text-orange fw-bold" href="#home">Jadwal</a></li>
+          <li class="nav-item"><a class="nav-link text-orange fw-bold" href="#home">Beranda</a></li>
+          <li class="nav-item"><a class="nav-link text-orange fw-bold" href="#denah">Denah</a></li>
           <li class="nav-item"><a class="nav-link text-orange fw-bold" href="#sponsor">Sponsor</a></li>
           <li class="nav-item"><a class="nav-link text-orange fw-bold" href="#galeri">Galeri</a></li>
           <li class="nav-item"><a class="nav-link text-orange fw-bold" href="#pendaftaran">Pendaftaran</a></li>
@@ -131,8 +132,8 @@
 
   <!-- Hero Section -->
 <!-- HERO BANNER -->
-<section class="hero">
-  <div class="container">
+<section class="hero" id="home">
+  <div class="container my-5" data-aos="zoom-in">
     <img src="<?= base_url('assets/gambar/event logo 2.png') ?>" alt="Logo Kudungga Run" class="img-fluid">
   </div>
 </section>
@@ -145,56 +146,59 @@
 </div>
 
 <!-- DENAH LOKASI -->
-<section class="section-denah bg-white" id="denah">
+<section class="section-denah bg-white my-5" id="denah">
   <div class="container">
-    <h2 class="fw-bold mb-4 text-orange">Denah Lokasi</h2>
-    <div class="card shadow">
+    <h2 class="fw-bold mb-4 text-orange" data-aos="fade-down">Denah Lokasi</h2>
+    <div class="card shadow" data-aos="zoom-in-up">
       <img src="<?= base_url('assets/gambar/denah.png') ?>" alt="Denah Lokasi Kudungga Run" class="img-fluid">
     </div>
   </div>
 </section>
 
   <!-- Sponsor -->
-  <section class="py-5 bg-white text-center" id="sponsor">
-    <div class="container">
-      <h2 class="fw-bold mb-4 text-orange">Sponsor</h2>
+  <section class="py-5 bg-orange text-center" id="sponsor">
+    <div class="container my-5">
+      <h2 class="fw-bold mb-4 text-white" data-aos="fade-right">Sponsor</h2>
       <div class="row justify-content-center align-items-center g-4">
-        <div class="col-6 col-md-2"><img src="<?= base_url('assets/gambar/event logo 1.png') ?>" alt="Sponsor 1" class="img-fluid"></div>
-        <div class="col-6 col-md-2"><img src="<?= base_url('assets/gambar/event logo 1.png') ?>" alt="Sponsor 2" class="img-fluid"></div>
-        <div class="col-6 col-md-2"><img src="<?= base_url('assets/gambar/event logo 1.png') ?>" alt="Sponsor 3" class="img-fluid"></div>
+        <div class="col-6 col-md-6" data-aos="zoom-in" data-aos-delay="100"><img src="<?= base_url('assets/gambar/event logo 2.png') ?>" alt="Sponsor 1" class="img-fluid"></div>
+        <div class="col-6 col-md-6" data-aos="zoom-in" data-aos-delay="300"><img src="<?= base_url('assets/gambar/event logo 2.png') ?>" alt="Sponsor 1" class="img-fluid"></div>
+        <div class="col-6 col-md-6" data-aos="zoom-in" data-aos-delay="500"><img src="<?= base_url('assets/gambar/event logo 2.png') ?>" alt="Sponsor 1" class="img-fluid"></div>        
       </div>
     </div>
   </section>
 
   <!-- Galeri -->
-  <section class="py-5 bg-orange text-white text-center" id="galeri">
-    <div class="container">
-      <h2 class="fw-bold mb-4">Galeri Event</h2>
+  <section class="py-5 bg-white text-orange text-center" id="galeri">
+    <div class="container my-5 py-5">
+      <h2 class="fw-bold mb-4" data-aos="fade-right">Galeri Event</h2>
       <div class="row g-3">
-        <div class="col-6 col-md-4"><img src="<?= base_url('assets/gambar/event logo 2.png') ?>" class="img-fluid rounded shadow"></div>
-        <div class="col-6 col-md-4"><img src="<?= base_url('assets/gambar/event logo 2.png') ?>" class="img-fluid rounded shadow"></div>
-        <div class="col-6 col-md-4"><img src="<?= base_url('assets/gambar/event logo 2.png') ?>" class="img-fluid rounded shadow"></div>
+        <div class="col-6 col-md-4" data-aos="zoom-in" data-aos-delay="100"><img src="<?= base_url('assets/gambar/event logo 1.png') ?>" class="img-fluid rounded shadow"></div>
+        <div class="col-6 col-md-4" data-aos="zoom-in" data-aos-delay="300"><img src="<?= base_url('assets/gambar/event logo 1.png') ?>" class="img-fluid rounded shadow"></div>
+        <div class="col-6 col-md-4" data-aos="zoom-in" data-aos-delay="500"><img src="<?= base_url('assets/gambar/event logo 1.png') ?>" class="img-fluid rounded shadow"></div>
+        <div class="col-6 col-md-4" data-aos="zoom-in" data-aos-delay="700"><img src="<?= base_url('assets/gambar/event logo 1.png') ?>" class="img-fluid rounded shadow"></div>
+        <div class="col-6 col-md-4" data-aos="zoom-in" data-aos-delay="900"><img src="<?= base_url('assets/gambar/event logo 1.png') ?>" class="img-fluid rounded shadow"></div>
+        <div class="col-6 col-md-4" data-aos="zoom-in" data-aos-delay="1100"><img src="<?= base_url('assets/gambar/event logo 1.png') ?>" class="img-fluid rounded shadow"></div>
       </div>
     </div>
   </section>
 
   <!-- Racepack (Swiper Slider) -->
-  <section class="py-5 bg-white text-center" id="racepack">
-    <div class="container">
-      <h2 class="fw-bold mb-4 text-orange">Race Pack</h2>
-      <div class="swiper mySwiper">
+  <section class="py-5 bg-orange text-center" id="racepack">
+    <div class="container my-5 py-5">
+      <h2 class="fw-bold mb-4 text-white" data-aos="fade-down">Race Pack</h2>
+      <div class="swiper mySwiper" data-aos="zoom-in">
         <div class="swiper-wrapper">
-          <div class="swiper-slide"><img src="<?= base_url('assets/gambar/event logo 1.png') ?>" class="img-fluid" alt="Racepack 1"></div>
-          <div class="swiper-slide"><img src="<?= base_url('assets/gambar/event logo 1.png') ?>" class="img-fluid" alt="Racepack 2"></div>
-          <div class="swiper-slide"><img src="<?= base_url('assets/gambar/event logo 1.png') ?>" class="img-fluid" alt="Racepack 3"></div>
+          <div class="swiper-slide"><img src="<?= base_url('assets/gambar/event logo 2.png') ?>" class="img-fluid" alt="Racepack 1"></div>
+          <div class="swiper-slide"><img src="<?= base_url('assets/gambar/event logo 2.png') ?>" class="img-fluid" alt="Racepack 2"></div>
+          <div class="swiper-slide"><img src="<?= base_url('assets/gambar/event logo 2.png') ?>" class="img-fluid" alt="Racepack 3"></div>
         </div>
-        <div class="swiper-pagination"></div>
+        <div class=""></div>
       </div>
     </div>
   </section>
 
   <!-- Pendaftaran -->
-  <section class="py-5 bg-orange text-white text-center" id="pendaftaran">
+  <section class="py-5 bg-white text-orange text-center" id="pendaftaran">
     <div class="container">
       <h2 class="fw-bold mb-4">Formulir Pendaftaran</h2>
       <form action="<?= base_url('pendaftaran/simpan') ?>" method="post" enctype="multipart/form-data" class="bg-white rounded-4 p-5 shadow-lg mx-auto text-start" style="max-width: 700px;">
@@ -289,9 +293,37 @@
 
 
   <!-- Footer -->
-  <footer class="py-4 bg-white text-center">
-    <p class="m-0 text-orange">&copy; 2025 Kudungga Run Festival. All rights reserved.</p>
-  </footer>
+<footer class="bg-orange text-white text-center py-5 my-5">
+  <div class="container py-5 my-5">
+
+    <!-- Logo Kudungga -->
+    <div class="mb-4" data-aos="fade-up">
+      <img src="<?= base_url('assets/gambar/event logo 2.png') ?>" alt="Kudungga Logo" style="max-height: 70px;">
+    </div>
+
+    <!-- Menu -->
+    <div class="d-flex flex-wrap justify-content-center gap-4 mb-4 fw-bold fs-6">
+      <a href="#home" class="text-white text-decoration-none" data-aos="fade-up" data-aos-delay="100">JADWAL</a>
+      <a href="#sponsor" class="text-white text-decoration-none" data-aos="fade-up" data-aos-delay="200">SPONSOR</a>
+      <a href="#pendaftaran" class="text-white text-decoration-none" data-aos="fade-up" data-aos-delay="300">PENDAFTARAN</a>
+      <a href="#galeri" class="text-white text-decoration-none" data-aos="fade-up" data-aos-delay="400">GALERI</a>
+      <a href="#kontak" class="text-white text-decoration-none" data-aos="fade-up" data-aos-delay="500">GABUNG</a>
+    </div>
+
+    <!-- Copyright -->
+    <p class="mb-3" style="font-size: 0.8rem;" data-aos="fade-up" data-aos-delay="600">
+      Kudungga Run Festival 2025 &copy; Hak Cipta Dilindungi
+    </p>
+
+    <!-- Instagram Icon -->
+    <div data-aos="fade-up" data-aos-delay="700">
+      <a href="https://instagram.com/kudunggarunfestival" target="_blank" class="text-white fs-4">
+        <i class="bi bi-instagram"></i>
+      </a>
+    </div>                      
+
+  </div>
+</footer>  
 
   <!-- JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -317,6 +349,17 @@
       autoplay: { delay: 2500, disableOnInteraction: false },
     });
   </script>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 1000,       // durasi animasi dalam ms (1000ms = 1 detik)
+    easing: 'ease-in-out', // efek transisi animasi
+    delay: 100             // penundaan awal default animasi (opsional)
+  });
+</script>
+
+
 
 </body>
 </html>

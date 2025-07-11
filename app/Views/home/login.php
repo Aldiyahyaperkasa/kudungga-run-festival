@@ -12,6 +12,10 @@
       min-height: 100vh;
       font-family: 'Segoe UI', sans-serif;
     }
+    .text-orange 
+    { 
+      color: #fff; 
+    }
     .login-card {
       background: white;
       border-radius: 1.5rem;
@@ -39,7 +43,31 @@
   </style>
 </head>
 <body class="d-flex justify-content-center align-items-center">
-  <div class="login-card text-center">
+  <nav class="navbar navbar-expand-lg bg-transparent fixed-top" data-aos="fade-down">
+    <div class="container">
+      <a class="navbar-brand fw-bold text-orange" href="#">
+          <img src="<?= base_url('assets/gambar/event logo 2.png') ?>" alt="Sponsor 1" class="img-fluid" style="max-height:50px;">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav gap-3">
+          <li class="nav-item"><a class="nav-link text-orange fw-bold" href="<?= base_url('/'); ?>/#home">Beranda</a></li>
+          <li class="nav-item"><a class="nav-link text-orange fw-bold" href="<?= base_url('/'); ?>/#denah">Denah</a></li>
+          <li class="nav-item"><a class="nav-link text-orange fw-bold" href="<?= base_url('/'); ?>/#sponsor">Sponsor</a></li>
+          <li class="nav-item"><a class="nav-link text-orange fw-bold" href="<?= base_url('/'); ?>/#galeri">Galeri</a></li>
+          <li class="nav-item"><a class="nav-link text-orange fw-bold" href="<?= base_url('/'); ?>/#pendaftaran">Pendaftaran</a></li>
+          <li class="nav-item">
+            <a class="btn btn-login nav-link text-orange fw-bold" href="<?= base_url('login'); ?>">
+                <i class="bi bi-box-arrow-in-right me-1"></i> Login
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>  
+  <div class="login-card text-center py-5 my-5">
     <div class="mb-4">
       <img src="<?= base_url('assets/gambar/event logo 1.png') ?>" alt="Logo Kudungga Run" style="width: 100%;" class="mb-3">
     </div>
