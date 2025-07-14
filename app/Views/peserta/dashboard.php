@@ -190,11 +190,95 @@
             </div>
 
 
-          <?php else: ?>
-            <div class="alert alert-success text-center">
-              Status Pendaftaran: <?= esc($peserta['status_pendaftaran']) ?>
-            </div>
-          <?php endif; ?>
+<?php elseif ($peserta['status_pendaftaran'] == 'Terkonfirmasi'): ?>
+  <!-- Kondisi 3: Terkonfirmasi - Tampilkan Data Lengkap + QR + Tiket -->
+  <div class="card p-4">
+    <div class="text-center">
+      <p class="text-orange fw-bold mb-2">Scan Kode QR Saat Pengambilan Race Pack</p>
+      <img src="<?= base_url('kodeqr/qr_' . $peserta['kode_unik_peserta'] . '.png') ?>" alt="QR Code"
+           style="width:150px; height:150px; border: 2px solid #ff6f00; border-radius: 8px;">
+      <p class="fw-bold mt-2"><?= esc('QR-' . $peserta['kode_unik_peserta']) ?></p>
+
+      <a href="<?= base_url('tiket/tiket_' . $peserta['kode_unik_peserta'] . '.pdf') ?>" 
+         class="btn btn-orange w-50 py-3 mt-3" target="_blank">
+        Download Tiket
+      </a>
+    </div>
+
+    <hr class="my-4">
+
+    <h4 class="mb-4 text-orange">Informasi Data Anda</h4>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label text-orange fw-bold">Nama Lengkap</label>
+        <input type="text" class="form-control" value="<?= esc($peserta['nama_peserta']) ?>" readonly>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label text-orange fw-bold">Email</label>
+        <input type="email" class="form-control" value="<?= esc($peserta['email']) ?>" readonly>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label text-orange fw-bold">NIK</label>
+        <input type="text" class="form-control" value="<?= esc($peserta['nik']) ?>" readonly>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label text-orange fw-bold">Tanggal Lahir</label>
+        <input type="text" class="form-control" value="<?= esc(date('d-m-Y', strtotime($peserta['tanggal_lahir']))) ?>" readonly>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <label class="form-label text-orange fw-bold">Jenis Kelamin</label>
+        <input type="text" class="form-control" value="<?= esc($peserta['jenis_kelamin']) ?>" readonly>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label text-orange fw-bold">Usia</label>
+        <input type="text" class="form-control" value="<?= esc($peserta['usia']) ?>" readonly>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label text-orange fw-bold">Kategori Lari</label>
+        <input type="text" class="form-control" value="<?= esc($peserta['kategori_lari']) ?>" readonly>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label text-orange fw-bold">Alamat Lengkap</label>
+      <textarea class="form-control" rows="2" readonly><?= esc($peserta['alamat']) ?></textarea>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label text-orange fw-bold">No. Telepon</label>
+        <input type="text" class="form-control" value="<?= esc($peserta['no_telepon']) ?>" readonly>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label text-orange fw-bold">No. Telepon Darurat</label>
+        <input type="text" class="form-control" value="<?= esc($peserta['no_telepon_darurat_1']) ?>" readonly>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label text-orange fw-bold">Ukuran Baju</label>
+      <input type="text" class="form-control" value="<?= esc($peserta['ukuran_baju']) ?>" readonly>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label text-orange fw-bold">Riwayat Penyakit</label>
+      <input type="text" class="form-control" value="<?= esc($peserta['riwayat_penyakit']) ?>" readonly>
+    </div>
+  </div>
+<?php else: ?>
+  <div class="alert alert-success text-center">
+    Status Pendaftaran: <?= esc($peserta['status_pendaftaran']) ?>
+  </div>
+<?php endif; ?>
+
+
 
         </div>
       </section>

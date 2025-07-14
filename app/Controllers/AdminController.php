@@ -34,7 +34,7 @@ public function konfirmasiPeserta()
     // Data pagination (5 data per halaman, misalnya)
     $data['peserta'] = $model
         ->where('status_pendaftaran', 'Menunggu')
-        ->paginate(1, 'peserta');
+        ->paginate(10, 'peserta');
 
     $data['pager'] = $model->pager;
     $data['currentPage'] = $currentPage;
@@ -100,154 +100,34 @@ public function konfirmasi($id)
     ]);
 
     // 🧾 Generate PDF Tiket (pakai gambar base64 agar lebih cepat)
-    $dompdf = new Dompdf(new Options(['isRemoteEnabled' => true]));
+    $options = new \Dompdf\Options();
+    $options->set('isRemoteEnabled', true); // 🔥 WAJIB untuk load gambar background
+
+    $dompdf = new \Dompdf\Dompdf($options);
+
 
     // Ambil gambar logo dan qr sebagai base64
     $logoPath = FCPATH . 'assets/gambar/event logo 1.png';
+  
+    $logoBase64 = base64_encode(file_get_contents(FCPATH . 'assets/gambar/event logo 1.png'));
     $qrBase64 = base64_encode(file_get_contents($qrPath));
-    $logoBase64 = base64_encode(file_get_contents($logoPath));
-
-    $html = '
-    <style>
-      body {
-        font-family: "Helvetica", sans-serif;
-        font-size: 13px;
-        margin: 0;
-        padding: 0;
-        background-color: #ffffff;
-        color: #222;
-      }
-
-      .ticket {
-        max-width: 720px;
-        margin: auto;
-        padding: 30px 40px;
-        border: 1px solid #ccc;
-      }
-
-      .header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 20px;
-      }
-
-      .header img {
-        height: 55px;
-      }
-
-      .event-info {
-        text-align: right;
-      }
-
-      .event-info h2 {
-        margin: 0;
-        font-size: 20px;
-        color: #007BFF;
-      }
-
-      .event-info small {
-        font-size: 12px;
-        color: #777;
-      }
-
-      hr {
-        border: none;
-        border-top: 1px solid #ddd;
-        margin: 20px 0;
-      }
-
-      .section-title {
-        font-weight: bold;
-        font-size: 14px;
-        margin-bottom: 10px;
-        color: #333;
-      }
-
-      .details, .info {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 20px;
-      }
-
-      .details .col, .info .col {
-        width: 48%;
-      }
-
-      .item {
-        margin-bottom: 8px;
-      }
-
-      .item span {
-        font-weight: bold;
-        color: #555;
-      }
-
-      .qr {
-        text-align: center;
-        margin-top: 30px;
-      }
-
-      .qr img {
-        width: 150px;
-        height: 150px;
-      }
-
-      .qr-code-text {
-        margin-top: 10px;
-        font-size: 14px;
-        font-weight: bold;
-      }
-
-      .footer {
-        margin-top: 40px;
-        font-size: 11px;
-        color: #888;
-        text-align: center;
-      }
-    </style>
-
-    <div class="ticket">
-      <div class="header">
-        <img src="data:image/png;base64,' . $logoBase64 . '" alt="Event Logo">
-        <div class="event-info">
-          <h2>KUDUNGGA RUN FESTIVAL 2025</h2>
-          <small>Lapangan Kudungga, Sangatta</small>
-        </div>
-      </div>
-
-      <hr>
-
-      <div class="section-title">Informasi Peserta</div>
-      <div class="details">
-        <div class="col">
-          <div class="item"><span>Nama:</span> ' . $peserta['nama_peserta'] . '</div>
-          <div class="item"><span>Email:</span> ' . $peserta['email'] . '</div>
-          <div class="item"><span>Nomor Tiket:</span> ' . $kodeUnik . '</div>
-        </div>
-        <div class="col">
-          <div class="item"><span>Kategori:</span> ' . ucfirst($peserta['kategori_lari']) . '</div>
-          <div class="item"><span>Tanggal:</span> 21 Juli 2025</div>
-          <div class="item"><span>Waktu:</span> 06.00 WITA - 11.00 WITA</div>
-        </div>
-      </div>
-
-      <hr>
-
-      <div class="qr">
-        <p>Scan QR ini saat pengambilan race pack</p>
-        <img src="data:image/png;base64,' . $qrBase64 . '" alt="QR Code">
-        <div class="qr-code-text">QR-' . $kodeUnik . '</div>
-      </div>
-
-      <div class="footer">
-        Harap menunjukkan tiket ini saat pengambilan nomor lari & race pack. <br>
-        © 2025 Kudungga Run Festival - All rights reserved.
-      </div>
-    </div>
-    ';
+    $background_path = FCPATH . 'assets/gambar/bg-tiket3.png';
+    $type = pathinfo($background_path, PATHINFO_EXTENSION);
+    $data = file_get_contents($background_path);
+    $background_base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
 
 
+    $html = view('admin/tiket_lampiran_pdf', [
+        'nama' => $peserta['nama_peserta'],
+        'email' => $peserta['email'],
+        'kategori_lari' => ucfirst($peserta['kategori_lari']),
+        'kode_qr' => 'QR-' . $kodeUnik,
+        'harga' => ($peserta['kategori_lari'] == 'Pelajar') ? 'Rp 50.000' : 'Rp 100.000',
+        'tanggal_daftar' => $peserta['tanggal_daftar'],
+        'qr_base64' => $qrBase64,
+        'logo_base64' => $logoBase64,
+        'background_base64' => $background_base64,
+    ]);
 
     $dompdf->loadHtml($html);
     $dompdf->setPaper('A4', 'portrait');
@@ -255,7 +135,7 @@ public function konfirmasi($id)
 
     $tiketPath = FCPATH . 'tiket/tiket_' . $kodeUnik . '.pdf';
     file_put_contents($tiketPath, $dompdf->output());
-
+    
 
 
     // Kirim Email menggunakan PHPMailer (SMTP Gmail)
@@ -327,7 +207,7 @@ public function konfirmasi($id)
             </table>
 
             <div style="text-align: center; margin-top: 30px;">
-              <p>Scan kode berikut saat pengambilan nomor lari:</p>
+              <p>Scan kode berikut saat pengambilan Race Pack:</p>
               <img src="cid:qrcode" alt="QR Code" style="width: 150px; height: 150px;"><br>
               <p style="margin-top: 10px; font-weight: bold; font-size: 14px; color: #555;">' . $kodeQrText   . '</p>
             </div>
